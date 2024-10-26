@@ -45,7 +45,7 @@ const Home = () => {
 
       {/* Fixed Post Blog Button */}
       <button
-        className="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full p-4 flex items-center gap-2 shadow-lg hover:bg-blue-700 transition-colors"
+        className="fixed bottom-6 right-6 bg-gradient-to-l from-blue-800 to-blue-400 text-white rounded-full p-4 flex items-center gap-2 shadow-lg hover:bg-blue-700 transition-colors"
         onClick={handlePostButtonClick}
       >
         <PlusCircle size={24} />
