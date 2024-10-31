@@ -9,11 +9,13 @@ import { MoreOutlined } from "@ant-design/icons";
 import BlogPostModal from "./BlogPostModal";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { deleteBlog } from "../api/deleteBlog";
+import BlogCardSkeleton from "./BlogCardSkeleton";
 
 const { confirm } = Modal;
 
 const BlogCard = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
   const navigate = useNavigate();
@@ -21,17 +23,32 @@ const BlogCard = () => {
 
   const fetchBlogs = async () => {
     try {
+      setLoading(true);
       const response = await getAllBlogs();
       if (response.status === 200 && response.data) {
         setBlogs(response.data as Blog[]);
       }
     } catch (error) {
       console.error("Error fetching blogs:", error);
+      message.error("Failed to fetch blogs");
+    }finally{
+      setLoading(false)
     }
   };
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  if (loading) {
+    return (
+      <>
+        {[1, 2, 3, 4, 5, 6].map((index) => (
+          <BlogCardSkeleton key={index} />
+        ))}
+      </>
+    );
+  }
+
   const handleModalSuccess = () => {
     fetchBlogs();  // Refresh blogs after successful creation/update
   };
